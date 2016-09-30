@@ -43,7 +43,7 @@ function usernameExists(username) {
   return users.filter((user) => username === user.name).length
 }
 function usernameValid(username) {
-  return username && username.match(/^[\w-\d]+$/g)
+  return username && username.match(/^[\w-\d]{1,15}$/g)
 }
 
 // Chatroom
@@ -105,11 +105,9 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     if (socket.user) {
       users = users.filter((user) => {
-        console.log(user.name,'!==',socket.user.name)
-        user.name !== socket.user.name
+        return user.name !== socket.user.name
       })
       console.log(socket.user.name + ' has disconnected.')
-      console.log('users update ', users)
       socket.broadcast.emit('users update', users)
     }
   })
