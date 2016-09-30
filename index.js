@@ -105,6 +105,7 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     if (socket.user) {
       users = users.filter((user) => {
+        console.log(user.name,'!==',socket.user.name)
         user.name !== socket.user.name
       })
       console.log(socket.user.name + ' has disconnected.')
