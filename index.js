@@ -83,7 +83,7 @@ io.on('connection', function (socket) {
   socket.on('new message', function (data) {
 
     // Fuck the spammers
-    if (lastMessage && lastMessage > Date.now() - 300) {
+    if (lastMessage && lastMessage > Date.now() - 1300) {
       if (tries > 3) socket.disconnect()
       else tries += 1
     } else {
