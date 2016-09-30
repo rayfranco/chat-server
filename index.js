@@ -79,6 +79,7 @@ io.on('connection', function (socket) {
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
+    console.log(socket.user.name + ' has sent message. '+ new Date().toString())
     socket.broadcast.emit('new message', {
       username: socket.user.name,
       text: data,
@@ -106,6 +107,8 @@ io.on('connection', function (socket) {
       users = users.filter((user) => {
         user.name !== socket.user.name
       })
+      console.log(user.name + ' has disconnected.')
+      console.log('users update ', users)
       socket.broadcast.emit('users update', users)
     }
   })
