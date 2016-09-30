@@ -66,7 +66,7 @@ io.on('connection', function (socket) {
 
     var user = {
       name: data.username,
-      avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)]
+      avatar: data.avatar
     }
 
     users.push(user)
