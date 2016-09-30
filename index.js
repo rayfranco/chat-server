@@ -107,7 +107,7 @@ io.on('connection', function (socket) {
       users = users.filter((user) => {
         user.name !== socket.user.name
       })
-      console.log(user.name + ' has disconnected.')
+      console.log(socket.user.name + ' has disconnected.')
       console.log('users update ', users)
       socket.broadcast.emit('users update', users)
     }
