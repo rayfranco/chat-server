@@ -49,6 +49,9 @@ function usernameValid(username) {
 // Chatroom
 
 io.on('connection', function (socket) {
+  var lastMessage = null
+  var tries = 0
+
   socket.emit('users update', users)
   // register user (String username)
   socket.on('register user', function(data) {
@@ -78,6 +81,17 @@ io.on('connection', function (socket) {
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
+
+    // Fuck the spammers
+    if (lastMessage && lastMessage > Date.now() - 300) {
+      if (tries > 3) socket.disconnect()
+      else tries += 1
+    } else {
+      tries = 0
+    }
+    lastMessage = Date.now()
+
+
     // we tell the client to execute 'new message'
     console.log(socket.user.name + ' has sent message. '+ new Date().toString())
     socket.broadcast.emit('new message', {
