@@ -78,7 +78,7 @@ When a command has been issued
 }
 ```
 
-### `error`
+### `chat error`
 When an error has been thrown (see error codes)
 ```
 {

@@ -1,9 +1,9 @@
-const ERRORS = require('./socket').ERRORS
+const { ERRORS } = require('./const.errors')
 
 const LIST = exports.LIST = []
 
 function usernameExists (username) {
-  return !!LIST.filter((user) => username === user.name).length
+  return !!LIST.filter((user) => username === user.username).length
 }
 
 function usernameIsValid (username) {
@@ -11,15 +11,15 @@ function usernameIsValid (username) {
 }
 
 exports.default = {
-  register (socket, { username, avatar = null }) {
+  register (socket, { username = '', avatar = null }) {
     const user = {
       username,
       avatar
     }
-    if (usernameExists) {
+    if (usernameExists(username)) {
       return Promise.reject(ERRORS.USERNAME_TAKEN)
     }
-    if (!usernameIsValid) {
+    if (!usernameIsValid(username)) {
       return Promise.reject(ERRORS.USERNAME_INVALID)
     }
     LIST.push(user)
@@ -28,8 +28,9 @@ exports.default = {
     return Promise.resolve(user)
   },
   unregister (socket) {
+    if (!socket.user) return Promise.reject('No socket user found')
     const index = LIST.findIndex((user) => {
-      return user.username === socket.user.name
+      return user.username === socket.user.username
     })
     if (index == null) {
       return Promise.reject(null)

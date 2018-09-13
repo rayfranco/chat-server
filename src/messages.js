@@ -1,7 +1,4 @@
-const socket = require('./socket')
-const ERRORS = require('./socket')
-
-const resolve = require('path')
+const { ERRORS } = require('./const.errors')
 
 const MESSAGES = []
 
@@ -33,13 +30,12 @@ function getCommand (message) {
   }
 }
 
-function formatMessage (message, isCommand = false) {
+function formatMessage (socket, message, isCommand = false) {
   return {
-    messages: MESSAGES,
-    message: {
-      type: isCommand ? 'command' : 'message',
-      ...message
-    }
+    type: isCommand ? 'command' : 'message',
+    text: message,
+    created: new Date(),
+    user: socket.user
   }
 }
 
@@ -52,14 +48,16 @@ exports.default = {
     if (!isValid(message)) {
       return Promise.reject(ERRORS.MESSAGE_INVALID)
     }
-    message = {
-      ...message,
-      created: new Date()
-    }
     if (isCommand(message)) {
-      return Promise.resolve(formatMessage(message, true))
+      return Promise.resolve({
+        message: formatMessage(socket, message, true)
+      })
     }
-    MESSAGES.push(message)
-    return Promise.resolve(formatMessage(message))
+    const m = formatMessage(socket, message)
+    MESSAGES.push(m)
+    return Promise.resolve({ 
+      message: m, 
+      messages: MESSAGES 
+    })
   }
 }
