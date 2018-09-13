@@ -1,5 +1,7 @@
-import socket, { ERRORS } from './socket'
-import { resolve } from 'path';
+const socket = require('./socket')
+const ERRORS = require('./socket')
+
+const resolve = require('path')
 
 const MESSAGES = []
 
@@ -41,7 +43,7 @@ function formatMessage (message, isCommand = false) {
   }
 }
 
-export default {
+exports.default = {
   add (message, socket) {
     if (isSpam(socket)) {
       return Promise.reject(ERRORS.MESSAGE_SPAMMING)

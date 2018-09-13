@@ -1,6 +1,6 @@
-import { ERRORS } from './socket'
+const ERRORS = require('./socket').ERRORS
 
-export const LIST = []
+const LIST = exports.LIST = []
 
 function usernameExists (username) {
   return !!LIST.filter((user) => username === user.name).length
@@ -10,7 +10,7 @@ function usernameIsValid (username) {
   return username && username.match(/^[\w-\d]{1,15}$/g)
 }
 
-export default {
+exports.default = {
   register (socket, { username, avatar = null }) {
     const user = {
       username,

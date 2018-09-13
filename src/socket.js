@@ -1,10 +1,10 @@
-import { LIST as usersList } from './users'
-import users from './users'
-import messages from './messages'
+const usersList = require('./users').LIST
+const users = require('./users')
+const messages = require('./messages')
 
-export default (io) => (socket) => new Socket(socket, io)
+exports.default = (io) => (socket) => new Socket(socket, io)
 
-export const ERRORS = {
+const ERRORS = exports.ERRORS = {
   ALREADY_CONNECTED: 100,
   USERNAME_TAKEN: 101,
   USERNAME_INVALID: 102,
@@ -12,7 +12,7 @@ export const ERRORS = {
   MESSAGE_SPAMMING: 201
 }
 
-export const ERROR_MESSAGES = {
+const ERROR_MESSAGES = exports.ERROR_MESSAGES = {
   100: 'You are already connected with a username',
   101: 'Username is already taken',
   102: 'Username is invalid',
@@ -20,13 +20,13 @@ export const ERROR_MESSAGES = {
   201: 'You are spamming too much, calm down!'
 }
 
-export const EVENTS_IN = {
+const EVENTS_IN = exports.EVENTS_IN = {
   USER_REGISTER: 'user register',
   USER_TYPING: 'user typing',
   MESSAGE_NEW: 'message new'
 }
 
-export const EVENTS_OUT = {
+const EVENTS_OUT = exports.EVENTS_OUT = {
   USERS_UPDATE: 'users update',
   USER_REGISTERED: 'user registered',
 
@@ -38,7 +38,7 @@ export const EVENTS_OUT = {
 }
 
 
-export class Socket {
+class Socket {
   constructor (socket, io) {
     this.io = io
     this.socket = socket
@@ -156,3 +156,5 @@ export class Socket {
     })
   }
 }
+
+exports.Socket = Socket
