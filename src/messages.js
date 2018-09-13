@@ -11,15 +11,13 @@ function isCommand (message) {
 }
 
 function isSpam (socket) {
-  let { lastMessage, tries } = socket
-  
-  if (lastMessage && lastMessage > Date.now() - 1300) {
-    if (tries > 3) return true
-    else tries += 1
+  if (socket.lastMessage && socket.lastMessage > Date.now() - 1300) {
+    if (socket.tries > 3) return true
+    else socket.tries += 1
   } else {
-    tries = 0
+    socket.tries = 0
   }
-  lastMessage = Date.now()
+  socket.lastMessage = Date.now()
   return false
 }
 
