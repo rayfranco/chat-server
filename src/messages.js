@@ -3,7 +3,8 @@ const { ERRORS } = require('./const.errors')
 let MESSAGES = []
 
 function isValid (message) {
-  return true
+  return typeof message === 'string'
+    && message.length > 0
 }
 
 function isCommand (message) {
