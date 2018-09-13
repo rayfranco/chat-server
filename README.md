@@ -28,7 +28,7 @@ Register a user in the chat.
 ### `user typing` 
 When the user start typing. No need to send when the user stops.
 
-###`message new` 
+### `message new` 
 When a new message has to ben sent to the chat
 ```
 message String
