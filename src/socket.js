@@ -49,7 +49,11 @@ class Socket {
   }
 
   onMessageNew (data) {
-    const { username } = this.socket.user
+    if (!this.socket.user) {
+      console.error('Some dude try to send message before login')
+      return
+    }
+    const username = this.socket.user.username
     const user = users.getUserFromUsername(username)
 
     messages.add(data, this.socket)

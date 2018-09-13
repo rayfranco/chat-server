@@ -7,7 +7,7 @@ function usernameExists (username) {
 }
 
 function usernameIsValid (username) {
-  return username && username.match(/^[\w-\d]{1,15}$/g)
+  return typeof username === 'string' && username.match(/^[\w-\d]{1,15}$/g)
 }
 
 exports.default = {
@@ -17,9 +17,11 @@ exports.default = {
       avatar
     }
     if (usernameExists(username)) {
+      console.log('USERNAME_EXISTS: ' + username)
       return Promise.reject(ERRORS.USERNAME_TAKEN)
     }
     if (!usernameIsValid(username)) {
+      console.log('USERNAME_INVALID: ' + username)
       return Promise.reject(ERRORS.USERNAME_INVALID)
     }
     LIST.push(user)
