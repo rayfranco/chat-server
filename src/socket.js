@@ -2,7 +2,7 @@ const usersList = require('./users').LIST
 const users = require('./users').default
 const messages = require('./messages').default
 const { EVENTS_IN, EVENTS_OUT } = require('./const.events')
-const { ERROR_MESSAGES } = require('./const.errors')
+const { ERRORS, ERROR_MESSAGES } = require('./const.errors')
 
 exports.default = (io) => (socket) => new Socket(socket, io)
 
@@ -21,6 +21,10 @@ class Socket {
 
   onUserRegister (data) {
     console.log('user registering')
+    if (this.socket.user) {
+      this.emitError(ERRORS.ALREADY_CONNECTED)
+      return
+    }
     users.register(this.socket, data)
       .then((user) => {
         this.socket.user = user
