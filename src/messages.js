@@ -1,6 +1,6 @@
 const { ERRORS } = require('./const.errors')
 
-const MESSAGES = []
+let MESSAGES = []
 
 function isValid (message) {
   return true
@@ -55,6 +55,9 @@ exports.default = {
     }
     const m = formatMessage(socket, message)
     MESSAGES.push(m)
+    if (MESSAGES.length > 50) {
+      MESSAGES = MESSAGES.slice(-50)
+    }
     return Promise.resolve({ 
       message: m, 
       messages: MESSAGES 
