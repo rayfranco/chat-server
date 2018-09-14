@@ -1,6 +1,8 @@
 
 # Socket.IO Chat
 
+Ooops
+
 A simple chat for socket.io
 
 ## How to use
