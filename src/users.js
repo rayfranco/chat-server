@@ -37,7 +37,7 @@ exports.default = {
     if (index == null) {
       return Promise.reject(null)
     } else {
-      const deleted = LIST.splice(index, 1)
+      const deleted = LIST.splice(index, 1)[0]
       return Promise.resolve(deleted)
     }
   },
