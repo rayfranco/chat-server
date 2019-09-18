@@ -1,4 +1,3 @@
-
 # Socket.IO Chat
 
 Ooops
@@ -16,10 +15,13 @@ And point your browser to `http://localhost:3000`. Optionally, specify
 a port by supplying the `PORT` env variable.
 
 ## API (incoming)
+
 Messages sent to server:
 
-### `user register` 
+### `user register`
+
 Register a user in the chat.
+
 ```
 {
   username: String,
@@ -27,20 +29,26 @@ Register a user in the chat.
 })
 ```
 
-### `user typing` 
+### `user typing`
+
 When the user start typing. No need to send when the user stops.
 
-### `message new` 
+### `message new`
+
 When a new message has to ben sent to the chat
+
 ```
 message String
 ```
 
-## API (outcoming) 
+## API (outcoming)
+
 Messages sent to client:
 
 ### `users update`
+
 When new users has joined/left the room
+
 ```
 {
   type: String<join|left>
@@ -50,16 +58,24 @@ When new users has joined/left the room
 ```
 
 ### `user registered`
+
 When you client got registered (after sending `user register`)
 
 ### `user typing`
+
 When a user start/stop typing
+
 ```
-typing Boolean
+{
+  typing: Boolean,
+  user: User
+}
 ```
 
 ### `message new`
+
 When a new message is sent in the room
+
 ```
 {
   message: {
@@ -72,7 +88,9 @@ When a new message is sent in the room
 ```
 
 ### `command new`
+
 When a command has been issued
+
 ```
 {
   command: String,
@@ -81,7 +99,9 @@ When a command has been issued
 ```
 
 ### `chat error`
+
 When an error has been thrown (see error codes)
+
 ```
 {
   code: Number,
@@ -91,8 +111,8 @@ When an error has been thrown (see error codes)
 
 ## Error codes
 
-* `100`: You are already connected with a username
-* `101`: Username is already taken
-* `102`: Username is invalid
-* `200`: The message is invalid
-* `201`: You are spamming too much, calm down!
+- `100`: You are already connected with a username
+- `101`: Username is already taken
+- `102`: Username is invalid
+- `200`: The message is invalid
+- `201`: You are spamming too much, calm down!
