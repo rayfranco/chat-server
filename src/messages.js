@@ -61,5 +61,8 @@ exports.default = {
       message: m, 
       messages: MESSAGES 
     })
+  },
+  get () {
+    return MESSAGES
   }
 }

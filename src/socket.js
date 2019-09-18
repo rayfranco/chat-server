@@ -29,6 +29,7 @@ class Socket {
       .then((user) => {
         this.socket.user = user
         this.emitUserAdd(user)
+        this.emitMessagesUpdate()
         console.log('user registered', user)
       })
       .catch((errCode) => {
@@ -118,6 +119,12 @@ class Socket {
       default:
         this.io.emit(EVENTS_OUT.MESSAGE_NEW, data)
     }
+  }
+
+  emitMessagesUpdate() {
+    this.io.emit(EVENTS_OUT.MESSAGES_UPDATE, {
+      messages: messages.get()
+    })
   }
 
   emitUserAdd (user) {

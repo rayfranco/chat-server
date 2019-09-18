@@ -52,6 +52,14 @@ When new users has joined/left the room
 ### `user registered`
 When you client got registered (after sending `user register`)
 
+### `messages update`
+When your client got registered you get a historical messages updates
+```
+{
+  messages: Array<Messages>
+}
+```
+
 ### `user typing`
 When a user start/stop typing
 ```
