@@ -109,7 +109,6 @@ class Socket {
   }
 
   emitMessage (data) {
-    console.log(data)
     switch (data.message.type) {
       case 'command': {
         const regex = /^\/(\w+) ?(.*)$/

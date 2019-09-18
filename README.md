@@ -31,7 +31,7 @@ Register a user in the chat.
 When the user start typing. No need to send when the user stops.
 
 ### `message new` 
-When a new message has to ben sent to the chat
+When a new message has to ben sent to the chat (limit to 500 characters)
 ```
 message String
 ```

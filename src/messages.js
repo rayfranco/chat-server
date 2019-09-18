@@ -5,6 +5,7 @@ let MESSAGES = []
 function isValid (message) {
   return typeof message === 'string'
     && message.length > 0
+    && message.length < 500
 }
 
 function isCommand (message) {
@@ -12,7 +13,7 @@ function isCommand (message) {
 }
 
 function isSpam (socket) {
-  if (socket.lastMessage && socket.lastMessage > Date.now() - 1300) {
+  if (socket.lastMessage && socket.lastMessage > Date.now() - 2000) {
     if (socket.tries > 3) return true
     else socket.tries += 1
   } else {
@@ -40,6 +41,7 @@ function formatMessage (socket, message, isCommand = false) {
 
 exports.default = {
   add (message, socket) {
+    console.log('will check if spam')
     if (isSpam(socket)) {
       return Promise.reject(ERRORS.MESSAGE_SPAMMING)
     }
