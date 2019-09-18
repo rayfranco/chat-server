@@ -42,7 +42,12 @@ exports.default = {
     }
   },
   typing (socket) {
-    const { username } = socket.user.username
+    const { username } = "";
+    if(typeof socket.user !== "undefined") username = socket.user.username
+    else{
+      console.error('Cannot find user when typing. FIXIT')
+      return Promise.reject(null)
+    }
     const user = this.getUserFromUsername(username)
     if (!user) {
       console.error('Cannot find user. FIXIT')
