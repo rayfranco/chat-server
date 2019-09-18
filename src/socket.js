@@ -112,7 +112,12 @@ class Socket {
     console.log(data)
     switch (data.message.type) {
       case 'command': {
-        this.io.emit(EVENTS_OUT.COMMAND_NEW, data)
+        const regex = /^\/(\w+) ?(.*)$/
+        const exec = regex.exec(data.message.text)
+        this.io.emit(EVENTS_OUT.COMMAND_NEW, {
+          command: exec[1],
+          value: exec[2]
+        })
         break
       }
       case 'message':
