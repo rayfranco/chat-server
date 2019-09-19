@@ -33,9 +33,9 @@ Register a user in the chat.
 
 When the user start typing. No need to send when the user stops.
 
-### `message new`
+### `message new` 
 
-When a new message has to ben sent to the chat
+When a new message has to ben sent to the chat (limit to 500 characters)
 
 ```
 message String
@@ -60,6 +60,14 @@ When new users has joined/left the room
 ### `user registered`
 
 When you client got registered (after sending `user register`)
+
+### `messages update`
+When your client got registered you get a historical messages updates
+```
+{
+  messages: Array<Messages>
+}
+```
 
 ### `user typing`
 

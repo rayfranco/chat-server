@@ -29,6 +29,7 @@ class Socket {
       .then((user) => {
         this.socket.user = user
         this.emitUserAdd(user)
+        this.emitMessagesUpdate()
         console.log('user registered', user)
       })
       .catch((errCode) => {
@@ -38,14 +39,10 @@ class Socket {
   }
 
   onUserTyping () {
+    this.emitTyping(true)
     users.typing(this.socket)
-      .then((user) => {
-        this.emitTyping(true)
-      })
       .then((wasTyping) => {
-        if (wasTyping) {
-          this.emitTyping(false)
-        }
+        this.emitTyping(false)
       })
       .catch((err) => {
         // Whatever
@@ -70,7 +67,8 @@ class Socket {
           this.emitTyping(false)
         }
       })
-      .catch((err) => {
+      .catch((errorCode) => {
+        this.emitError(errorCode)
         console.error('Error sendMessage')
         // Message can't be sent for some reason
       })
@@ -108,16 +106,26 @@ class Socket {
   }
 
   emitMessage (data) {
-    console.log(data)
     switch (data.message.type) {
       case 'command': {
-        this.io.emit(EVENTS_OUT.COMMAND_NEW, data)
+        const regex = /^\/(\w+) ?(.*)$/
+        const exec = regex.exec(data.message.text)
+        this.io.emit(EVENTS_OUT.COMMAND_NEW, {
+          command: exec[1],
+          value: exec[2]
+        })
         break
       }
       case 'message':
       default:
         this.io.emit(EVENTS_OUT.MESSAGE_NEW, data)
     }
+  }
+
+  emitMessagesUpdate() {
+    this.io.emit(EVENTS_OUT.MESSAGES_UPDATE, {
+      messages: messages.get()
+    })
   }
 
   emitUserAdd (user) {
