@@ -43,7 +43,7 @@ exports.default = {
   },
   typing (socket) {
     let username = ''
-    if(typeof socket.user !== 'undefined') username = socket.user.username
+    if (typeof socket.user !== 'undefined') username = socket.user.username
     else {
       console.error('Cannot find user when typing. FIXIT')
       return Promise.reject(null)
@@ -53,19 +53,23 @@ exports.default = {
       console.error('Cannot find user. FIXIT')
       return Promise.reject(null)
     }
-    user.typing = socket.writing = true
-    return Promise.resolve(() => {
-      setTimeout(() => {
+    socket.writing = true
+    
+    const checkLater = new Promise((resolve, reject) => {
+      if (socket.typingTimeout) {
+        clearTimeout(socket.typingTimeout)
+      }
+      socket.typingTimeout = setTimeout(() => {
         if (socket.writing) {
-          user.typing = false
           socket.writing = false
-          return Promise.resolve(true)
+          return resolve(true)
         } else {
-          user.typing = false
-          return Promise.resolve(false)
+          return resolve(false)
         }
       }, 5000) // Delay atfer what user is considered stopped writing
     })
+
+    return Promise.resolve(checkLater)
   },
   getUserFromUsername (username) {
     return LIST.find((user) => user.username === username)

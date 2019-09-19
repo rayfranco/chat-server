@@ -39,14 +39,10 @@ class Socket {
   }
 
   onUserTyping () {
+    this.emitTyping(true)
     users.typing(this.socket)
-      .then((user) => {
-        this.emitTyping(true)
-      })
       .then((wasTyping) => {
-        if (wasTyping) {
-          this.emitTyping(false)
-        }
+        this.emitTyping(false)
       })
       .catch((err) => {
         // Whatever
@@ -71,7 +67,8 @@ class Socket {
           this.emitTyping(false)
         }
       })
-      .catch((err) => {
+      .catch((errorCode) => {
+        this.emitError(errorCode)
         console.error('Error sendMessage')
         // Message can't be sent for some reason
       })
