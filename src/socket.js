@@ -123,7 +123,7 @@ class Socket {
   }
 
   emitMessagesUpdate() {
-    this.io.emit(EVENTS_OUT.MESSAGES_UPDATE, {
+    this.socket.emit(EVENTS_OUT.MESSAGES_UPDATE, {
       messages: messages.get()
     })
   }
